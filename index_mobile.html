@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">	
+		<meta name="viewport" content="width=device-width, initial-scale=1, mininum-scale=0.5, maximum-scale=2, user-scalable=yes">
+		<title>计数菌</title>
+		
+		<style type="text/css">
+			body{
+				padding:0.5em 0.5em;
+				background-color:#CCFFFF;
+				font-size:150%;
+				font-family:"Courier New","黑体";
+				line-height:2em;
+				color:black;
+				font-weight:bold;
+				
+				<!--Prevent users from selecting-->
+				user-select: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				-ms-user-select: none;
+			}
+			.red{ 
+				color:red;
+			}
+			.blue{
+				color:blue;
+			}
+			.green{
+				color:green;
+			}
+			.yellow{
+				color:#CC9900;
+			}
+			button{
+				
+				font-size:1em;
+			}
+			.randbutton{
+				width:1.45em;
+				margin:0px;
+			}
+			input[type=text]{
+				width:8.3em;
+				height:1em;
+				font-size:1em;
+				padding: 0.3em 0.625em;
+			}
+			div{
+				line-height:1.5em;
+				margin-bottom:0.7em;
+			}
+			button{
+				width:2.3em;
+				margin-right:0.5em;
+			}
+			#redaddzero,#greenaddzero,#blueaddzero,#yellowaddzero{
+				color:#CCFFFF;
+			}
+			td{
+				height:2em;
+				width:2.72em;
+			}
+			table{
+				margin-bottom:0.5em;
+				background-color:#7CCD7C;
+			}
+		</style>
+		
+	</head>
+	
+	<body onload="PCjudgment()">
+		<script type="text/javascript">
+        // PC端调用判断web设备
+        function PCjudgment(){
+            var UserClient = navigator.userAgent.toLowerCase();
+            var IsIPad = UserClient.match(/ipad/i) == "ipad";
+            var IsIphoneOs = UserClient.match(/iphone os/i) == "iphone os";
+            var IsMidp = UserClient.match(/midp/i) == "midp";
+            var IsUc7 = UserClient.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var IsUc = UserClient.match(/ucweb/i) == "ucweb";
+            var IsAndroid = UserClient.match(/android/i) == "android";
+            var IsCE = UserClient.match(/windows ce/i) == "windows ce";
+            var IsWM = UserClient.match(/windows mobile/i) == "windows mobile";
+            if(IsIPad || IsIphoneOs || IsMidp || IsUc7 || IsUc || IsAndroid || IsCE || IsWM){
+                window.location = "https://jayncp.github.io/jayncp/index_mobile.html";
+            }
+        }
+        // web端调用判断PC设备
+        function Webjudgment(){
+            var UserClient = navigator.userAgent.toLowerCase();
+            var IsIPad = UserClient.match(/ipad/i) == "ipad";
+            var IsIphoneOs = UserClient.match(/iphone os/i) == "iphone os";
+            var IsMidp = UserClient.match(/midp/i) == "midp";
+            var IsUc7 = UserClient.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+            var IsUc = UserClient.match(/ucweb/i) == "ucweb";
+            var IsAndroid = UserClient.match(/android/i) == "android";
+            var IsCE = UserClient.match(/windows ce/i) == "windows ce";
+            var IsWM = UserClient.match(/windows mobile/i) == "windows mobile";
+            if(!IsIPad && !IsIphoneOs && !IsMidp && !IsUc7 && !IsUc && !IsAndroid && !IsCE && !IsWM){
+                window.location = "https://jayncp.github.io/jayncp/index_pc.html";
+            }
+        }
+		</script>
+		
+		
+		<div>
+			<span id="HP">HP:</span>
+			<input type="text" id="numInput" style="text-align: right;"/><br>
+		</div>
+		
+		<table border="1px" cellspacing="2" bgcolor="lightgray" bordercolor="white">
+
+			<tr align="center"> 
+				<td onclick="OnClick(this)">c</td>
+				<td onclick="OnClick(this)">/</td>
+				<td onclick="OnClick(this)">*</td>
+				<td onclick="OnClick(this)">-</td>
+			</tr>
+			<tr  align="center">
+				<td onclick="OnClick(this)">7</td>
+				<td onclick="OnClick(this)">8</td>
+				<td onclick="OnClick(this)">9</td>
+				<td onclick="OnClick(this)" rowspan="2">+</td>
+			</tr>
+			<tr  align="center">
+				<td onclick="OnClick(this)">4</td>
+				<td onclick="OnClick(this)">5</td>
+				<td onclick="OnClick(this)">6</td>
+			</tr>
+			<tr  align="center">
+				<td onclick="OnClick(this)">1</td>
+				<td onclick="OnClick(this)">2</td>
+				<td onclick="OnClick(this)">3</td>
+				<td onclick="OnClick(this)" rowspan="2">=</td>
+			</tr>
+			<tr  align="center">
+				<td onclick="OnClick(this)">0</td>
+				<td onclick="load_sound(url)" colspan="2">music</td>
+			</tr>
+
+		</table>
+		
+
+		<span class="red" id="redtext">红宝石：</span>
+		<button type="button" onclick="decrease('rednum')">-1</button>
+		<span class="red" id="rednum">0</span><span id="redaddzero">0</span>
+		<button type="button" onclick="increase('rednum')">+1</button><br>
+		
+		<span class="green">绿宝石：</span>
+		<button type="button" onclick="decrease('greennum')">-1</button>
+		<span class="green" id="greennum">0</span><span id="greenaddzero">0</span>
+		<button type="button" onclick="increase('greennum')">+1</button><br>
+		
+		
+		<span class="blue">蓝宝石：</span>
+		<button type="button" onclick="decrease('bluenum')">-1</button>
+		<span class="blue" id="bluenum">0</span><span id="blueaddzero">0</span>
+		<button type="button" onclick="increase('bluenum')">+1</button><br>
+		
+
+		<span class="yellow">黄宝石：</span>
+		<button type="button" onclick="decrease('yellownum')">-1</button>
+		<span class="yellow" id="yellownum">0</span><span id="yellowaddzero">0</span>
+		<button type="button" onclick="increase('yellownum')">+1</button>
+		<br>
+		
+		<span>宝石总数：</span>
+		<span id="totalnum">0</span><br>
+		
+		<span>随机宝石:</span>
+		<button class="randbutton" type="button" onclick="getrand()">1</button>
+		<button class="randbutton" type="button" onclick="getrand();getrand()">2</button>
+		<button class="randbutton" type="button" onclick="getrand();getrand();getrand()">3</button>
+		
+		<script>
+			function update_total(){
+				a=document.getElementById("rednum").innerHTML;
+				b=document.getElementById("bluenum").innerHTML;
+				c=document.getElementById("greennum").innerHTML;
+				d=document.getElementById("yellownum").innerHTML;
+				var tot=Number(a)+Number(b)+Number(c)+Number(d);
+				<!-- alert(tot); -->
+				x=document.getElementById("totalnum");
+				<!-- alert(x.innerHTML); -->
+				x.innerHTML=tot.toString();
+				
+				<!-- if <=9, use a char to compensate -->
+				if(Number(a)<10) document.getElementById("redaddzero").innerHTML="0";
+				else document.getElementById("redaddzero").innerHTML="";
+				if(Number(b)<10) document.getElementById("blueaddzero").innerHTML="0";
+				else document.getElementById("blueaddzero").innerHTML="";
+				if(Number(c)<10) document.getElementById("greenaddzero").innerHTML="0";
+				else document.getElementById("greenaddzero").innerHTML="";
+				if(Number(d)<10) document.getElementById("yellowaddzero").innerHTML="0";
+				else document.getElementById("yellowaddzero").innerHTML="";
+			}
+			function increase(s){
+				x=document.getElementById(s);
+				<!-- alert(x.innerHTML); -->
+				var temp=Number(x.innerHTML)+1;
+				x.innerHTML=temp.toString();
+				update_total();
+			}
+			function decrease(s){
+				x=document.getElementById(s);
+				var temp=Number(x.innerHTML);
+				if(temp==0); <!-- alert("已经是0啦！"); -->
+				else x.innerHTML=(temp-1).toString();
+				update_total();
+			}
+			function getrand(){
+				<!-- Math.ceil函数用于向上取整 -->
+				<!-- Math.random()函数获得[0,1)之间的伪随机数 -->
+				<!-- var i=100000; -->
+				<!-- while(i--){ -->
+				var temp=Math.ceil(Math.random()*1100);
+				if(temp<=300) increase('rednum');
+				else if(temp<=600) increase('bluenum');
+				else if(temp<=900) increase('greennum');
+				else increase('yellownum');
+				<!-- } -->
+			}
+		</script>
+		
+		<script type="text/javascript">
+			var strs = "";
+
+			function OnClick(obj) {
+				var str = obj.innerText;
+				var numInput = document.getElementById("numInput");
+				
+				//如果是=,清空原有显示的内容，以免附加上去。执行eval();得到结果。
+				if(str=="="){
+					numInput.value="";
+					str=eval(strs);
+					strs = str+"";
+				}else{
+				//否则的话，继续将内容拼接到字符串后；
+					strs += str;
+				}
+				//如果点击C的话，将所有内容清空。
+				if(str=="c"){
+					numInput.value = "";
+					strs="";
+					str="";
+				}
+				//如果点击的是运算符的话，只显示运算符。
+				if(str=="+"||str=="-"||str=="*"||str=="/"){
+					numInput.value = str;
+				}else{
+					//如果前一次点击的是运算符：先将原有显示的内容清空，再将本次点击的显示到屏幕上；
+					//主要是为了避免出现: +23456 这样的情况。
+					if(isNaN(numInput.value)){
+						numInput.value="";	
+					}
+					//如果一直为数字，继续拼接显示。
+					numInput.value += str;				
+				}
+			}
+		</script>
+		
+		<script type="text/javascript">
+			var url='./music.mp3';
+			var con=new AudioContext();
+
+			function load_sound(url_data){
+			var req=new XMLHttpRequest();
+			req.open('GET',url_data,true);
+			req.responseType='arraybuffer';
+			req.onload=function(){
+			con.decodeAudioData(req.response,function(buffer){
+			var source=con.createBufferSource();
+			source.buffer=buffer;
+			source.connect(con.destination);
+			source.start(0);
+			},function(e){
+			console.info('SB!');
+			});
+			}
+			req.send();
+			}
+		</script>
+	</body>
+</html>
